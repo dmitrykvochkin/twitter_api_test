@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Twitter API Example</title>
+    <link rel='stylesheet' href='/stylesheets/grid12.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+
+  	<div class="container">
+
+  		<div class="row">
+  			<div class="col-md-6">
+  				<form action="/api/accounts" method="POST" data-msg_box_id="crawl_msg">
+			  		<h2>Crawl Users:</h2>
+			    	<input type="text" name="accounts_list"></input>
+			    	<input type="submit" value="Submit" class="form_submit">
+		    	</form>
+
+		    	<div id="crawl_msg" style="text-align: left;">
+
+		    	</div>
+
+  			</div>
+  			<div class="col-md-6">
+  				<form action="/api/accounts" method="GET" data-msg_box_id="find_msg">
+			  		<h2>Find Users:</h2>
+			    	<input type="text" name="screen_name"></input>
+			    	<input type="submit" value="Submit" class="form_submit">
+		    	</form>
+
+		    	<div id="find_msg" style="text-align: left;">
+
+		    	</div>
+  			</div>
+  		</div>
+
+
+  	</div>
+    
+
+
+  </body>
+  <script
+	  src="https://code.jquery.com/jquery-1.12.4.min.js"
+	  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+	  crossorigin="anonymous"></script>
+	  <script type="text/javascript">
+
+	  	//ajax forms
+	  	$('input.form_submit').click( function(e) {
+	  		e.preventDefault();
+	  		var form = $(this).parent();
+	  		var msg_box = $('#'+form.attr('data-msg_box_id'));
+		    $.ajax({
+		        url: form.attr('action'),
+		        type: form.attr('method'),
+		        dataType: 'json',
+		        data: form.serialize(),
+		        success: function(data) {
+		        	console.log('form submited', data);   
+        	   		msg_box.append('<br>').append('<span>'+data.msg+'</span>');   
+		        }
+		    });
+		});
+
+
+
+	  </script>
+</html>
